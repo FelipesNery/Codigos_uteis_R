@@ -1,0 +1,14 @@
+# Aqui estão os códigos que mais uso 
+
+# caso você tenha mais de um arquivo para abrir, usar o código abaixo para listar todos em um objeto
+arquivos <- list.files(path = 'path', pattern = '*.csv', full.names = TRUE) #se seu dado tiver em xlsx troque no lugar de csv
+
+# para abrir os arquivos listados no objeto acima, use
+db <- map_dfr(arquivos, read_csv, col_types = cols(.default = 'c')) # aqui coloquei todas as variaveis do tipo char para ajudar no empilhamento dos dados
+
+# para utilizar a semana epidemiológica, utilizada para analise em saude use
+db <- db %>%   mutate(
+  data = dmy(data), # como está em char, transforma a data em data, aqui usei dmy porque a minha estava DD\MM\AAAA
+  ano = year(data_coleta), #extraia ao ano
+  semana_epi = epiweek(data_coleta), #extraia a semana epidemiologica
+  ultimo_sabado = data_coleta + days(7 - wday(data_coleta, week_start = 7))) # coloque o sábado subsequente da semana epidemiológica, este passo é importante caso queira construir gráficos de linha
