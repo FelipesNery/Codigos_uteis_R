@@ -1,0 +1,21 @@
+# Aqui estão os principais pacotes
+
+install.packages('tidyverse')
+https://tidyverse.org/ 
+Tidyverse é uma coleção de pacotes projetados para ciência de dados, como limpeza, seleção, mutação e gráficos.
+
+install.packages('gtsummary')
+https://www.danieldsjoberg.com/gtsummary/
+Gtsummary é um pacote para criação de tabelas mais elegantes, flexíveis e analíticas para publicações.
+
+install.packages('geobr')
+https://github.com/ipeaGIT/geobr
+O pacote geobr para baixar conjunto de dados espaciais de todo o Brasil.
+
+install.packages('readxl')
+https://readxl.tidyverse.org/
+O pacote readxl é utilizado para importação e exportação de arquivos com extensão .xlsx.
+
+install.packages('readr')
+https://readr.tidyverse.org/
+O pacote readr é utilizado para importação e exportação de arquivos com extensão .csv.
