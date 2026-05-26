@@ -12,3 +12,41 @@ db <- db %>%   mutate(
   ano = year(data_coleta), #extraia ao ano
   semana_epi = epiweek(data_coleta), #extraia a semana epidemiologica
   ultimo_sabado = data_coleta + days(7 - wday(data_coleta, week_start = 7))) # coloque o sábado subsequente da semana epidemiológica, este passo é importante caso queira construir gráficos de linha
+
+# Caso faça o download de varios dados separados, com o mesmo numero e nome de variaveis, pode junta-los usando o bind rows
+db <- bind_rows(db1, db2, db3..)
+
+# Dentro do pacote Tidyverse, há diversas funções que permitem manipular banco de dados, entre as principais estão
+
+## Filter
+# O filter é utilizado para filtrar um valor dentro de uma variavel. Há diversas combinações de filtros possíveis, pode-se filtar apenas um valor, mais de um valor ou pode filtrar excluindo um valor
+
+# filtrando apenas um valor
+db %>% filter(var == number) or db %>% filter(var == 'String') # note que para filtrar numero e string o que muda é a utilização de aspas simples pou duplas para do tipo string. 
+
+# filtrando dois ou mais valores
+db %>% filter(var == 'valor1' | var == 'valor2') # aqui estou filtrando um valor OU outro, usando a lógica, o resultado retornará os dois valores caso houver, ou apenas um deles
+
+db %>% filter(var == 'valor1' & var2 == 'valor2') # aqui estou filtrando os resultado para duas variaveis que retornará apenas os resultados que ambas as condições são verdadeiras
+
+db %>% filter(var %in% c('valor1', 'valor2' ...)) # aqui estou filtrando mais de um valor presente em uma variavel.
+
+db %>% filter(!is.na(var)) # neste estou retirando todos os valores NA de uma variável
+
+## Select 
+# A função select permite que você selecione as variaveis de interesse que queira utilizar, conseguindo diminuir a quantidade presente no seu banco.
+db %>% select(var1, var2. var3 ...)
+
+## Mutate
+# A função mutate é utilizada para modificação e criação de novas variaveis na base de dados. Aqui as aplicações são inúmeras, que dependem de qual análise irá fazer.
+
+# Modificando uma variavel ja existente
+db %>% mutate(data = dmy(data)) # transformando a varaivel data
+
+
+# Criando uma nova variavel em relacao a outra
+db %>% mutate(estado = case_when(UF == 13 ~ 'Amazonas', TRUE ~ 'Outro estado'))
+
+## Group_by and summarise
+# As funções group by e summarise sempre andam juntas porque geralmente ao sumarizar uma variavel, você quer contar a frequência em que ela aparece na base
+db %>% grou_by(var) %>% summarise(total = n())
